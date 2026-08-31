@@ -1,0 +1,2 @@
+DEFAULT_LLM_PROVIDER = "groq"
+DEFAULT_LLM_PROVIDER_PARAM_FILE = "llm_provider.yaml"

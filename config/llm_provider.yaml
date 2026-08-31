@@ -1,0 +1,53 @@
+groq:
+  provider: groq
+  api_key_env: GROQ_API_KEY
+
+  agents:
+
+    supervisor_agent:
+      model: openai/gpt-oss-120b
+      temperature: 0.1
+      max_tokens: null
+      max_retries: 3
+
+    data_analyst_agent:
+      model: openai/gpt-oss-20b
+      temperature: 0.0
+      max_tokens: null
+      max_retries: 2
+
+    statistical_analyst_agent:
+      model: openai/gpt-oss-120b
+      temperature: 0.0
+      max_tokens: null
+      max_retries: 3
+
+    visualisation_agent_agent:
+      model: openai/gpt-oss-20b
+      temperature: 0.1
+      max_tokens: null
+      max_retries: 2
+
+    interpretation_agent:
+      model: openai/gpt-oss-120b
+      temperature: 0.2
+      max_tokens: null
+      max_retries: 3
+
+    critic_agent:
+      model: openai/gpt-oss-120b
+      temperature: 0.0
+      max_tokens: null
+      max_retries: 3
+
+    report_generation_agent:
+      model: openai/gpt-oss-120b
+      temperature: 0.2
+      max_tokens: null
+      max_retries: 3
+
+    code_generation_agent:
+      model: openai/gpt-oss-120b
+      temperature: 0.0
+      max_tokens: null
+      max_retries: 3
