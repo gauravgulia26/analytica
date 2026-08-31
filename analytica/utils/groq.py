@@ -1,3 +1,7 @@
+"""
+Utilities for querying Groq model API endpoints and metadata.
+"""
+
 import os
 from typing import Any
 
@@ -5,7 +9,17 @@ import requests
 
 
 def get_available_groq_models() -> dict[str, dict[str, Any]]:
-    """Return all models available through the Groq API."""
+    """
+    Fetch and return metadata for all active models available through the Groq API.
+
+    Returns:
+        dict[str, dict[str, Any]]: Mapping of model IDs to model specifications
+            (owned_by, context_window, max_completion_tokens, active status).
+
+    Raises:
+        ValueError: If the GROQ_API_KEY environment variable is not set.
+        requests.HTTPError: If the API request fails.
+    """
     api_key = os.environ.get("GROQ_API_KEY")
 
     if not api_key:
