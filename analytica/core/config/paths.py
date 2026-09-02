@@ -14,6 +14,7 @@ from analytica.core.constants.paths_constants import (
     DEFAULT_MODELS_DIR,
     DEFAULT_NOTEBOOKS_DIR,
     DEFAULT_PROCESSED_DATA_DIR,
+    DEFAULT_PROMPT_DIR,
     DEFAULT_RAW_DATA_DIR,
     DEFAULT_REPORTS_DIR,
     DEFAULT_TESTS_DIR,
@@ -22,6 +23,8 @@ from analytica.core.constants.providers_constants import (
     DEFAULT_LLM_PROVIDER_PARAM_FILE,
 )
 from analytica.utils.get_root import get_root
+
+from ..constants.project_constants import PROJECT_NAME
 
 ROOT_DIR = get_root()
 
@@ -49,10 +52,15 @@ ENV_FILE = ROOT_DIR / DEFAULT_ENV_FILE
 
 # Provider (Groq)
 DEFAULT_CONFIG_PATH = ROOT_DIR / DEFAULT_CONFIG_DIR / DEFAULT_LLM_PROVIDER_PARAM_FILE
+
+# Prompt Path
+DEFAULT_PROMPT_DIR_PATH = ROOT_DIR / PROJECT_NAME / DEFAULT_PROMPT_DIR
+
 __all__ = [
     "CONFIG_DIR",
     "DATA_DIR",
     "DEFAULT_CONFIG_PATH",
+    "DEFAULT_PROMPT_DIR_PATH",
     "DOCS_DIR",
     "ENV_FILE",
     "EXTERNAL_DATA_DIR",

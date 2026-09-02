@@ -24,3 +24,6 @@ DEFAULT_NOTEBOOKS_DIR = "notebooks"
 DEFAULT_DOCS_DIR = "docs"
 DEFAULT_TESTS_DIR = "tests"
 DEFAULT_ENV_FILE = ".env"
+
+# Prompt Directory
+DEFAULT_PROMPT_DIR = "prompts"
