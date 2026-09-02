@@ -60,10 +60,24 @@ def get_error_message_detail(
 
     # 4. Extract file name and line number from traceback if available
     if exc_tb is not None:
-        while exc_tb.tb_next is not None:
-            exc_tb = exc_tb.tb_next
-        file_name = exc_tb.tb_frame.f_code.co_filename
-        line_number = exc_tb.tb_lineno
+        frames = []
+        curr = exc_tb
+        while curr is not None:
+            frames.append((curr.tb_frame.f_code.co_filename, curr.tb_lineno))
+            curr = curr.tb_next
+
+        # Prefer the deepest frame in user/project code (skip third-party site-packages)
+        chosen_frame = None
+        for fn, ln in reversed(frames):
+            frame_str = str(Path(fn).resolve())
+            if "site-packages" not in frame_str and frame_str != str(CURRENT_EXCEPTION_FILE):
+                chosen_frame = (fn, ln)
+                break
+
+        if chosen_frame is not None:
+            file_name, line_number = chosen_frame
+        elif frames:
+            file_name, line_number = frames[-1]
 
     # 5. Fallback to caller stack inspection if no traceback was specified
     if file_name is None or line_number is None:
@@ -154,3 +168,13 @@ class AnalyticaException(Exception):
 # Aliases for flexibility and standard conventions
 AppException = AnalyticaException
 CustomException = AnalyticaException
+
+
+def _analytica_excepthook(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, AnalyticaException):
+        # The exception has already been logged upon instantiation; exit cleanly without raw traceback
+        sys.exit(1)
+    sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
+
+sys.excepthook = _analytica_excepthook

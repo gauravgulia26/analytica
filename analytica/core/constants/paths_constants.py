@@ -25,5 +25,8 @@ DEFAULT_DOCS_DIR = "docs"
 DEFAULT_TESTS_DIR = "tests"
 DEFAULT_ENV_FILE = ".env"
 
-# Prompt Directory
+# Agents Config
 DEFAULT_PROMPT_DIR = "prompts"
+DEFAULT_AGENT_DIR = "agents"
+DEFAULT_SCHEMA_DIR = "schema"
+DEFAULT_TOOL_DIR = "tools"
