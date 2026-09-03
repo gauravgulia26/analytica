@@ -54,3 +54,8 @@ extend-select = ["I","E","F"]  # Add import sorting
 known-first-party = ["analytica"]
 force-sort-within-sections = true
 
+[dependency-groups]
+dev = [
+    "viztracer>=1.1.1",
+]
+

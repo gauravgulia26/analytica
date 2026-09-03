@@ -38,7 +38,9 @@ class AgentBuilder(BaseModel):
             provider_name=self.agent_provider, agent_name=self.agent_name
         ).get_llm()
 
-        return base_llm.with_structured_output(self.agent_schema)
+        return base_llm.with_structured_output(
+            self.agent_schema, method="json_schema", strict=True
+        )
 
     @property
     def get_config_grid(self) -> dict:

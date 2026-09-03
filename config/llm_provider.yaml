@@ -6,15 +6,16 @@ groq:
 
     supervisor_agent:
       model: openai/gpt-oss-120b
-      temperature: 0.1
-      max_tokens: null
+      temperature: 0
+      max_tokens: 16384
       max_retries: 3
+      reasoning_efforts: low
 
     data_analyst_agent:
-      model: openai/gpt-oss-20b
+      model: openai/gpt-oss-120b
       temperature: 0.0
-      max_tokens: null
-      max_retries: 2
+      max_tokens: 8192
+      max_retries: 3
 
     statistical_analyst_agent:
       model: openai/gpt-oss-120b

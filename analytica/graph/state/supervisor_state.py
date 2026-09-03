@@ -1,24 +1,23 @@
-from enum import Enum
 from typing import Any, TypedDict
 
-
-class TaskStatus(str, Enum):
-    PENDING = "pending"
-    RUNNING = "running"
-    COMPLETED = "completed"
-    FAILED = "failed"
+from ...agents.schema.agents_schema.supervisor_schema import Task
 
 
-class SupervisorState(TypedDict):
+class SupervisorState(TypedDict, total=False):
     user_request: str
+    objective: str
+    tasks: list[Task]
+    final_deliverable: str
 
-    tasks: list[Any]
-
-    current_task: str | None
+    current_task: Task | None
     current_agent: str | None
-    pending_tasks: list[Any]
-    skipped_tasks: list[Any]
+    pending_tasks: list[Task]
+    completed_tasks: list[Task]
+    skipped_tasks: list[Task]
 
     results: dict[str, Any]
-
     errors: list[str]
+
+
+# Alias for compatibility
+AnalyticaState = SupervisorState

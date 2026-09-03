@@ -26,7 +26,8 @@ def list_providers() -> str:
 @dataclass
 class ProviderFactory:
     """
-    Factory responsible for loading agent-specific provider configuration and creating LLM instances.
+    Factory responsible for loading agent-specific provider configuration and
+    creating LLM instances.
 
     Attributes:
         provider_name: The name of the LLM provider (e.g., 'groq').
@@ -83,7 +84,8 @@ class ProviderFactory:
         return ChatGroq(
             model=cfg.config.model,
             temperature=cfg.config.temperature,
-            max_tokens=cfg.config.max_tokens,
+            max_tokens=cfg.config.max_tokens or 32768,
             max_retries=cfg.config.max_retries,
+            reasoning_effort=cfg.config.reasoning_efforts,
             api_key=cfg.groq_api_key.get_secret_value(),
         )

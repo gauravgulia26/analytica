@@ -1,3 +1,7 @@
-from .supervisor_schema import SupervisorOutput
+from .supervisor_schema import NextAction, SupervisorOutput, Task
 
-__all__ = ["SupervisorOutput"]
+__all__ = [
+    "NextAction",
+    "SupervisorOutput",
+    "Task",
+]

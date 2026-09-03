@@ -14,20 +14,34 @@ class NextAction(str, Enum):
     END = "end"
 
 
-class SupervisorOutput(BaseModel):
-    agent_flow: list[NextAction] = Field(
-        title="The next agent or action required.",
-        description="The list of the agents in the same order they needs to be executed based on the user request",
-        examples=[NextAction.DATA_ANALYSIS, NextAction.STATISTICAL_ANALYSIS],
-        alias="flow",
+class Task(BaseModel):
+    task_id: str = Field(description="Unique task identifier, e.g. 'task_1', 'task_2'")
+    action: NextAction = Field(
+        description="The specialized capability/action needed for this task"
     )
-    reasoning: dict[NextAction, str] = Field(
-        title="Reasoning behind the selected agent.",
-        description="Reasoning behind selecting each agent, why it is selected and why it is needed for the flow. Refer user query for this, what you find in user query that made you select this agent.",
-        examples=[
-            {
-                NextAction.DATA_ANALYSIS: "User requested data analysis from the query",
-                NextAction.STATISTICAL_ANALYSIS: "Statistical agent needs for the workflow to run smoothly",
-            }
-        ],
+    objective: str = Field(description="Clear, specific objective of this analytical task")
+    description: str = Field(
+        description="Scope and instructions for the task, explaining what needs to be performed",
+    )
+    depends_on: list[str] = Field(
+        default_factory=list,
+        description="List of task_ids that must be completed before this task can start",
+    )
+    expected_output: list[str] = Field(
+        default_factory=list,
+        description="Key output deliverables or findings expected from this task",
+    )
+
+
+class SupervisorOutput(BaseModel):
+    objective: str = Field(
+        description="The overall objective of the requested analytical workflow."
+    )
+
+    tasks: list[Task] = Field(
+        description="Ordered list of tasks required to complete the workflow."
+    )
+
+    final_deliverable: str = Field(
+        description="The final result that should be delivered to the user."
     )

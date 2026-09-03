@@ -20,4 +20,5 @@ class GroqModelConfig:
     model: str
     temperature: float
     max_retries: int
+    reasoning_efforts: str | None = None
     max_tokens: int | None = None
