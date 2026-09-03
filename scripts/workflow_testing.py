@@ -1,24 +1,8 @@
-import sys
-
 from rich import print
 
-from analytica.agents.schema import SupervisorOutput
-from analytica.builder.agent_builder import AgentBuilder
-from analytica.exception import AnalyticaException
+from analytica.graph.build import SupervisorBuild
 
-try:
-    obj = AgentBuilder(
-        agent_prompt_name="supervisor_prompt",
-        agent_name="supervisor_agent",
-        agent_input_variables=["input"],
-        agent_provider="groq",
-        agent_schema=SupervisorOutput,
-    )
-except Exception as e:
-    raise AnalyticaException(error=e, error_detail=sys)
-else:
-    chain = obj.build_agent_chain()
-    txt = """I am evaluating whether a company should expand its AI-powered fraud detection platform into the European market.
+txt = """I am evaluating whether a company should expand its AI-powered fraud detection platform into the European market.
 
 Analyze the following situation:
 
@@ -37,7 +21,16 @@ For the European expansion, I need to determine:
 
 Do not perform the analysis yourself. Determine which specialized agents should handle each part of the problem and specify the order in which they should be executed. Identify dependencies between tasks and explain which tasks can be performed in parallel."""
 
-    input = {obj.agent_input_variables[0]: txt}
-    res = chain.invoke(input=input)
+
+def main():
+    builder = SupervisorBuild()
+    workflow = builder.get_compiled_graph()
+    print(workflow.get_graph().draw_ascii())
+    print(builder)
+    res = workflow.invoke({builder.graph_input_variable[0]: txt})
+    return res
+
+
+if __name__ == "__main__":
+    res = main()
     print(res)
-    print(res.agent_flow)

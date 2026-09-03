@@ -15,6 +15,19 @@ class NextAction(str, Enum):
 
 
 class SupervisorOutput(BaseModel):
-    next_action: NextAction = Field(description="The next agent or action required.")
-
-    task: str = Field(description="The specific task the selected agent should perform.")
+    agent_flow: list[NextAction] = Field(
+        title="The next agent or action required.",
+        description="The list of the agents in the same order they needs to be executed based on the user request",
+        examples=[NextAction.DATA_ANALYSIS, NextAction.STATISTICAL_ANALYSIS],
+        alias="flow",
+    )
+    reasoning: dict[NextAction, str] = Field(
+        title="Reasoning behind the selected agent.",
+        description="Reasoning behind selecting each agent, why it is selected and why it is needed for the flow. Refer user query for this, what you find in user query that made you select this agent.",
+        examples=[
+            {
+                NextAction.DATA_ANALYSIS: "User requested data analysis from the query",
+                NextAction.STATISTICAL_ANALYSIS: "Statistical agent needs for the workflow to run smoothly",
+            }
+        ],
+    )

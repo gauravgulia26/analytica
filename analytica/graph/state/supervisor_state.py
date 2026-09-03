@@ -9,22 +9,15 @@ class TaskStatus(str, Enum):
     FAILED = "failed"
 
 
-class Task(TypedDict):
-    id: str
-    task: str
-    status: TaskStatus
-    agent: str | None
-    result: Any
-    depends_on: list[str]
-
-
 class SupervisorState(TypedDict):
     user_request: str
 
-    tasks: list[Task]
+    tasks: list[Any]
 
     current_task: str | None
     current_agent: str | None
+    pending_tasks: list[Any]
+    skipped_tasks: list[Any]
 
     results: dict[str, Any]
 
